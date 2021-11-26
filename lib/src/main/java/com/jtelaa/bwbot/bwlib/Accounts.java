@@ -1,18 +1,18 @@
 package com.jtelaa.bwbot.bwlib;
 
-import java.net.http.HttpClient;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Properties;
+// import java.net.http.HttpClient;
+// import java.net.URI;
+// import java.net.http.HttpRequest;
+// import java.net.http.HttpResponse;
+// import java.util.Properties;
 
-import com.jtelaa.da2.lib.config.PropertiesUtils;
+// import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.log.Log;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+// import org.json.JSONArray;
+// import org.json.JSONObject;
 
 public class Accounts {
 
@@ -30,7 +30,7 @@ public class Accounts {
     public static synchronized boolean validateEmail(String email, String method) {
         switch (method) {
             case "simple": return validateEmailSimple(email);
-            case "rapidapi": return validateEmailRapidAPI(email);
+            //case "rapidapi": return validateEmailRapidAPI(email);
             default: return validateEmailSimple(email);
 
         }
@@ -66,7 +66,7 @@ public class Accounts {
     public static synchronized boolean validate(String username, String method) {
         switch (method) {
             case "simple": return validateUsernameSimple(username);
-            case "rapidapi": return validateUsernameRapidAPI(username);
+            //case "rapidapi": return validateUsernameRapidAPI(username);
             default: return validateUsernameSimple(username);
 
         }
@@ -115,84 +115,84 @@ public class Accounts {
 
     }
 
-    /**
-     * Validate username using rapidapi's email-checker
-     * 
-     * @param username username to check
-     * 
-     * @return validity
-     */
+    // /**
+    //  * Validate username using rapidapi's email-checker
+    //  * 
+    //  * @param username username to check
+    //  * 
+    //  * @return validity
+    //  */
 
-    public static synchronized boolean validateUsernameRapidAPI(String username) {
-        return validateEmailRapidAPI(username + Account.EMAIL_DOMAIN);
+    // public static synchronized boolean validateUsernameRapidAPI(String username) {
+    //     return validateEmailRapidAPI(username + Account.EMAIL_DOMAIN);
 
-    }
+    // }
 
-    /**
-     * Validate email using rapidapi's email-checker
-     * 
-     * @param email Email to check
-     * 
-     * @return validity
-     */
+    // /**
+    //  * Validate email using rapidapi's email-checker
+    //  * 
+    //  * @param email Email to check
+    //  * 
+    //  * @return validity
+    //  */
 
-    public static synchronized boolean validateEmailRapidAPI(String email) {
-        // Check if its correctly formatted first
-        if (!validateEmailSimple(email)) { return false; }
-        Log.sendMessage("checking agaist rapidapi email-checker");
+    // public static synchronized boolean validateEmailRapidAPI(String email) {
+    //     // Check if its correctly formatted first
+    //     if (!validateEmailSimple(email)) { return false; }
+    //     Log.sendMessage("checking agaist rapidapi email-checker");
 
-        // Config
-        Properties config = PropertiesUtils.importInternalConfig("com/jtelaa/bwbot/bw_manager/apis.properties");
+    //     // Config
+    //     Properties config = PropertiesUtils.importInternalConfig("com/jtelaa/bwbot/bw_manager/apis.properties");
 
-        // Reformat Email
-        email = email.replace("@", "%40");
+    //     // Reformat Email
+    //     email = email.replace("@", "%40");
 
-        // Create HTTP Request
-        HttpRequest request = HttpRequest.newBuilder()
-		.uri(URI.create("https://email-checker.p.rapidapi.com/verify/v1?email=" + email))
-        .header("x-rapidapi-key", config.getProperty("email-checker"))
-		.header("x-rapidapi-host", "email-checker.p.rapidapi.com")
-		.method("GET", HttpRequest.BodyPublishers.noBody())
-		.build();
+    //     // Create HTTP Request
+    //     HttpRequest request = HttpRequest.newBuilder()
+	// 	.uri(URI.create("https://email-checker.p.rapidapi.com/verify/v1?email=" + email))
+    //     .header("x-rapidapi-key", config.getProperty("email-checker"))
+	// 	.header("x-rapidapi-host", "email-checker.p.rapidapi.com")
+	// 	.method("GET", HttpRequest.BodyPublishers.noBody())
+	// 	.build();
         
-        try {
-            // Check against api
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+    //     try {
+    //         // Check against api
+    //         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             
-            // Parse JSON
-            JSONArray json = new JSONArray(response.body());
-            Log.sendMessage("response: " + json.toString());
+    //         // Parse JSON
+    //         JSONArray json = new JSONArray(response.body());
+    //         Log.sendMessage("response: " + json.toString());
             
-            // Setup local var
-            String status = "n";
+    //         // Setup local var
+    //         String status = "n";
 
-            // Look through response for the status
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject json_obj = json.getJSONObject(i);
-                status = json_obj.getString("status");
+    //         // Look through response for the status
+    //         for (int i = 0; i < json.length(); i++) {
+    //             JSONObject json_obj = json.getJSONObject(i);
+    //             status = json_obj.getString("status");
 
-            }
+    //         }
 
-            // Send status to log
-            Log.sendLogMessage(email + " using rapidapi is " + status);
+    //         // Send status to log
+    //         Log.sendLogMessage(email + " using rapidapi is " + status);
 
-            // If valid
-            if (status.equals("valid")) { 
-                return true;
+    //         // If valid
+    //         if (status.equals("valid")) { 
+    //             return true;
 
-            } else {
-                return false;
+    //         } else {
+    //             return false;
 
-            }
+    //         }
             
 
-        } catch (Exception e) {
-            Log.sendMessage(e);
-        } 
+    //     } catch (Exception e) {
+    //         Log.sendMessage(e);
+    //     } 
 
-        // Default
-        return false;
+    //     // Default
+    //     return false;
 
-    }
+    // }
     
 }
