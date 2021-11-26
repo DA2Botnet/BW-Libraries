@@ -1,0 +1,9 @@
+com/jtelaa/bwbot/bwlib/Request.class
+com/jtelaa/bwbot/bwlib/Query.class
+com/jtelaa/bwbot/bwlib/Account.class
+com/jtelaa/bwbot/bwlib/BWMessages.class
+com/jtelaa/bwbot/bwlib/Card.class
+com/jtelaa/bwbot/bwlib/BWUser.class
+com/jtelaa/bwbot/bwlib/BWPorts.class
+com/jtelaa/bwbot/bwlib/Accounts.class
+com/jtelaa/bwbot/bwlib/BWSQLQueries.class
