@@ -14,54 +14,55 @@ public class Query implements Serializable {
     /** Bing Search URL */
     public static final String BING_URL = "bing.com/search?q=";
     
-    /** Unformatted query */
-    @Deprecated
-    public String unformatted_query;
-    /** Formatted query */
-    public String formatted_query; 
+    /** Query */
+    public String query; 
+
+    /** Query without typo */
+    public String original_query;
 
     /**
      * Constructor
      * 
-     * @param query Search query
-     * @param formatted Whether it is formatted or not
+     * @param query The query (Not formatted)
      */
 
-    public Query(String query, Boolean formatted) {
-        if (formatted) {
-            query = formatted_query;
-        } else {
-            query = unformatted_query;
-            formatted_query = formatQuery(unformatted_query);
-            
-        }
+    public Query(String query) {
+        this.query = query;
+        this.original_query = query;
+
     }
 
-    /**
+     /**
      * Constructor
      * 
-     * @param formatted_query The formatted query
+     * @param typoed_query The query
+     * @param original_query The query without any typos
      */
 
-    public Query(String formatted_query) {
-        this.formatted_query = formatted_query;
+    public Query(String typoed_query, String original_query) {
+        this.query = typoed_query;
+        this.original_query = original_query;
 
     }
 
-    /** Return query */
-    public String toString() { return getQuery(); }
+    /** Check if the query is properly formatted */
+    public boolean isFormatted() { return query.contains(" "); }
 
-    /** Get unformatted query @return unformatted query */
-    @Deprecated
-    public String getUnformattedQuery() { unformatted_query = unformatQuery(formatted_query); return unformatted_query; }
-    /** Get formatted query @return formatted query */
-    public String getFormattedQuery() { formatted_query = formatQuery(unformatted_query); return formatted_query; }
+    /** Compare typo */
+    public boolean isTypoed() { return query.equalsIgnoreCase(original_query); }
+
     /** Return query */
-    public String getQuery() { return formatted_query; }
+    public String toString() { return formatQuery().getQuery(); }
+
+    /** Return query with the proper formatting (+ instead of spaced ) */
+    public String getQuery() { return formatQuery().getQuery(); }
+
+    /** Query without spacing */
+    public String getRawQuery() { return unformatQuery().getQuery(); }
 
     /** Format query @return formatted query */
-    public static String formatQuery(String query) { return query.replaceAll(" ", "+"); }
+    public Query formatQuery() { return new Query(query.replaceAll(" ", "+")); }
     /** Unformat query @return unformatted query */
-    public static String unformatQuery(String query) { return query.replaceAll("+", " "); }
+    public Query unformatQuery() { return new Query(query.replaceAll("+", " ")); }
     
 }
