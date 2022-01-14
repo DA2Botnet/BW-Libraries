@@ -10,9 +10,6 @@ import java.io.Serializable;
  */
 
 public class Query implements Serializable {
-
-    /** Bing Search URL */
-    public static final String BING_URL = "bing.com/search?q=";
     
     /** Query */
     public String query; 
@@ -62,6 +59,7 @@ public class Query implements Serializable {
 
     /** Format query @return formatted query */
     public Query formatQuery() { return new Query(query.replaceAll(" ", "+")); }
+    
     /** Unformat query @return unformatted query */
     public Query unformatQuery() { return new Query(query.replaceAll("+", " ")); }
     
