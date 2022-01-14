@@ -14,9 +14,6 @@ public class Query implements Serializable {
     /** Query */
     public String query; 
 
-    /** Query without typo */
-    public String original_query;
-
     /**
      * Constructor
      * 
@@ -25,28 +22,11 @@ public class Query implements Serializable {
 
     public Query(String query) {
         this.query = query;
-        this.original_query = query;
-
-    }
-
-     /**
-     * Constructor
-     * 
-     * @param typoed_query The query
-     * @param original_query The query without any typos
-     */
-
-    public Query(String typoed_query, String original_query) {
-        this.query = typoed_query;
-        this.original_query = original_query;
 
     }
 
     /** Check if the query is properly formatted */
     public boolean isFormatted() { return query.contains(" "); }
-
-    /** Compare typo */
-    public boolean isTypoed() { return query.equalsIgnoreCase(original_query); }
 
     /** Return query */
     public String toString() { return formatQuery().getQuery(); }
